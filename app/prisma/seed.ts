@@ -1,41 +1,57 @@
 import { PrismaClient } from "@prisma/client";
+import * as bcrypt from 'bcrypt';
 
 // initialize Prisma Client
 const prisma = new PrismaClient();
 
 async function main() {
+  const hashedPassword = await bcrypt.hash(
+    "password",
+    10,
+  );
   // create user
-  const post1 = await prisma.user.upsert({
+  const user1 = await prisma.user.upsert({
     where: { name: "Khamit", email: "test@gmail.com" },
-    update: {},
+    update: { },
     create: {
       name: 'Khamit',
       email: 'test@gmail.com',
+      columns: {
+        create: {
+          title: "FirstColimn",
+          cards: {
+            create: {
+              title: "FirstCard",
+              comments: {
+                create: [
+                  {
+                    text: "Привет! Хороший FirstCard Комментарии1!"
+                  },
+                  {
+                    text: "Привет! Хороший FirstCard Комментарии2!"
+                  },
+                  {
+                    text: "Привет! Хороший FirstCard Комментарии3!"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      password: hashedPassword
     },
   });
 
-  const post2 = await prisma.article.upsert({
-    where: { title: "What's new in Prisma? (Q1/22)" },
-    update: {},
-    create: {
-      title: "What's new in Prisma? (Q1/22)",
-      body: 'Our engineers have been working hard, issuing new releases with many improvements...',
-      description:
-        'Learn about everything in the Prisma ecosystem and community from January to March 2022.',
-      published: true,
-    },
-  });
-
-  console.log({ post1, post2 });
+  console.log({ user1 });
 }
 
-// execute the main function
 main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
+  .then(async () => {
+    await prisma.$disconnect()
   })
-  .finally(async () => {
-    // close Prisma Client at the end
-    await prisma.$disconnect();
-  });
+  .catch(async (e) => {
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })

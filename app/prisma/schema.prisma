@@ -8,11 +8,11 @@ datasource db {
 }
 
 model User {
-  id     Int      @id @default(autoincrement())
-  name   String?  @db.VarChar(255)
-  email  String   @unique @db.VarChar(255)
-  password String @db.VarChar(255)
-  column Column[]
+  id       Int      @id @default(autoincrement())
+  name     String?  @db.VarChar(255)
+  email    String   @unique @db.VarChar(255)
+  password String   @db.VarChar(255)
+  columns  Column[]
 }
 
 model Column {
@@ -20,7 +20,7 @@ model Column {
   title     String   @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(6)
   userId    Int
-  card      Card[]
+  cards     Card[]
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -30,7 +30,7 @@ model Card {
   title     String    @db.VarChar(255)
   columnId  Int
   column    Column    @relation(fields: [columnId], references: [id], onDelete: Cascade)
-  comment   Comment[]
+  comments  Comment[]
 }
 
 model Comment {
