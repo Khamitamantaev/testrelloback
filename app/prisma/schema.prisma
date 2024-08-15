@@ -17,21 +17,31 @@ model User {
   id     Int      @id @default(autoincrement())
   name   String?  @db.VarChar(255)
   email  String   @unique @db.VarChar(255)
-  Column Column[]
+  column Column[]
 }
 
 model Column {
   id        Int      @id @default(autoincrement())
   title     String   @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(6)
-  userId  Int
+  userId    Int
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  Card Card[]
+  card      Card[]
 }
 
 model Card {
-  id Int @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now()) @db.Timestamp(6)
+  title     String    @db.VarChar(255)
+  columnId  Int
+  Column    Column    @relation(fields: [columnId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  comment   Comment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  text      String   @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(6)
-  columnId Int
-  Column      Column     @relation(fields: [columnId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cardId    Int
+  card      Card     @relation(fields: [cardId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
