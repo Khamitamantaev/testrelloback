@@ -1,26 +1,35 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+//src/auth/auth.service.ts
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { PrismaService } from './../prisma/prisma.service';
+import { JwtService } from '@nestjs/jwt';
+import { AuthEntity } from './entities/auth.entity';
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
-  }
+  constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  async login(email: string, password: string): Promise<AuthEntity> {
+    const user = await this.prisma.user.findUnique({ where: { email: email } });
+    console.log(user)
+    if (!user) {
+      throw new NotFoundException(`No user found for email: ${email}`);
+    }
+    const isPasswordMatching = await bcrypt.compare(
+      password,
+      user.password
+    );
+    if (!isPasswordMatching) {
+      throw new HttpException('Invalid Password', HttpStatus.BAD_REQUEST);
+    }
+    return {
+      accessToken: this.jwtService.sign({ userId: user.id }),
+    };
   }
 }

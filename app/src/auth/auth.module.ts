@@ -10,6 +10,7 @@ export const jwtSecret = 'secret';
 
 @Module({
   imports: [
+    PrismaModule,
     PassportModule,
     JwtModule.register({
       secret: jwtSecret,
