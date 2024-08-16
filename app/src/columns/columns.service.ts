@@ -13,6 +13,11 @@ export class ColumnsService {
     }
 
     // Колонки конкретного юзера со всем картами и комментариями
+    async findColumnById(id: number) {
+        return this.prisma.column.findUnique({ where: { id }})
+    }
+
+    // Колонки конкретного юзера со всем картами и комментариями
     async findUserColumnsDataById(userId: number) {
         return this.prisma.column.findMany({ where: { userId }, include: { cards: { include: { comments: true } } } })
     }
