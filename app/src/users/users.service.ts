@@ -24,16 +24,16 @@ export class UsersService {
     });
   }
 
-  findAll() {
+  async findAll() {
     return this.prisma.user.findMany();
   }
 
-  findOne(id: number) {
-    return this.prisma.user.findUnique({ where: { id } });
+  async findOne(id: number) {
+    return this.prisma.user.findUnique({ where: { id }, select: { email: true, name: true, password: false } });
   }
 
   // Получаем пользователя со всеми данными
-  findOneWithData(id: number) {
+  async findOneWithData(id: number) {
     return this.prisma.user.findFirst({ where: { id }, include: { columns: { include: { cards: { include: { comments: true } } } } } });
   }
 
@@ -51,7 +51,7 @@ export class UsersService {
     });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return this.prisma.user.delete({ where: { id } });
   }
 }

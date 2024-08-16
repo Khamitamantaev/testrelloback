@@ -32,6 +32,12 @@ import {
     @Get(':id')
     // @UseGuards(JwtAuthGuard)
     async findOne(@Param('id', ParseIntPipe) id: number) {
+      return await this.usersService.findOne(id);
+    }
+
+    @Get('/all/:id')
+    // @UseGuards(JwtAuthGuard)
+    async findOneWithData(@Param('id', ParseIntPipe) id: number) {
       return await this.usersService.findOneWithData(id);
     }
   
