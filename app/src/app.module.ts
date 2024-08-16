@@ -5,9 +5,10 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { JwtStrategy } from './auth/jwt.strategy';
+import { ColumnsModule } from './columns/columns.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, PrismaModule],
+  imports: [AuthModule, UsersModule, PrismaModule, ColumnsModule],
   controllers: [AppController],
   providers: [AppService, JwtStrategy],
 })

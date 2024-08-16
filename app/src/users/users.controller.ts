@@ -32,7 +32,7 @@ import {
     @Get(':id')
     // @UseGuards(JwtAuthGuard)
     async findOne(@Param('id', ParseIntPipe) id: number) {
-      return await this.usersService.findOne(id);
+      return await this.usersService.findOneWithData(id);
     }
   
     @Patch(':id')
