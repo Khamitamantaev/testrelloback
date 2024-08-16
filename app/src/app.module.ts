@@ -6,9 +6,10 @@ import { UsersModule } from './users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { ColumnsModule } from './columns/columns.module';
+import { CardsModule } from './cards/cards.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, PrismaModule, ColumnsModule],
+  imports: [AuthModule, UsersModule, PrismaModule, ColumnsModule, CardsModule],
   controllers: [AppController],
   providers: [AppService, JwtStrategy],
 })
