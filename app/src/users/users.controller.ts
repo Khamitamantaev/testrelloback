@@ -13,10 +13,14 @@ import {
   import { CreateUserDto } from './dto/create-user.dto';
   import { UpdateUserDto } from './dto/update-user.dto';
   import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+  import { ColumnsService } from 'src/columns/columns.service';
   
   @Controller('users')
   export class UsersController {
-    constructor(private readonly usersService: UsersService) {}
+    constructor(
+      private readonly usersService: UsersService,
+      private readonly columnService: ColumnsService
+    ) {}
   
     @Post()
     async create(@Body() createUserDto: CreateUserDto) {
@@ -26,19 +30,25 @@ import {
     @Get()
     // @UseGuards(JwtAuthGuard)
     async findAll() {
-      return await this.usersService.findAll();
+      return this.usersService.findAll();
     }
   
     @Get(':id')
     // @UseGuards(JwtAuthGuard)
     async findOne(@Param('id', ParseIntPipe) id: number) {
-      return await this.usersService.findOne(id);
+      return this.usersService.findOne(id);
     }
 
     @Get('/all/:id')
     // @UseGuards(JwtAuthGuard)
     async findOneWithData(@Param('id', ParseIntPipe) id: number) {
-      return await this.usersService.findOneWithData(id);
+      return this.usersService.findOneWithData(id);
+    }
+
+    // Найти все колонки юзера по userId
+    @Get('/:id/columns')
+    async findAllUserColumnsById(@Param('id', ParseIntPipe) id: number) {
+      return this.columnService.findUserColumnsById(id)
     }
   
     @Patch(':id')
@@ -48,6 +58,11 @@ import {
       @Body() updateUserDto: UpdateUserDto,
     ) {
       return await this.usersService.update(id, updateUserDto);
+    }
+
+    @Delete('/:id/columns')
+    async deleteAllUserColumnsByid(@Param('id', ParseIntPipe) id: number) {
+      return await this.columnService.deleteColumnByUserId(id)
     }
   
     @Delete(':id')

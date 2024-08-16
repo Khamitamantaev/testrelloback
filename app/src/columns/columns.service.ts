@@ -27,8 +27,13 @@ export class ColumnsService {
         return this.prisma.column.update({ where: { id: columnId}, data: columnUpdateDto})
     }
     
-    // Удаление
+    // Удаление по id
     async deleteColumnById(columnId: number) {
         return this.prisma.column.delete({ where: { id: columnId }})
+    }
+
+    // Удаление по userId всех его колонок
+    async deleteColumnByUserId(userId: number) {
+        return this.prisma.column.deleteMany({ where: { userId }})
     }
 }
