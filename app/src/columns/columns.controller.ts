@@ -16,7 +16,7 @@ export class ColumnsController {
 
     @Patch(':id')
     @UseGuards(JwtAuthGuard)
-    async updateColumn(@Param('id', ParseIntPipe) id: number, updateColumnDto: UpdateColumnDto) {
+    async updateColumn(@Param('id', ParseIntPipe) id: number, @Body() updateColumnDto: UpdateColumnDto) {
         return this.columnService.updateColumnById(id, updateColumnDto)
     }
     

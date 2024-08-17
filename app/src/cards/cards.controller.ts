@@ -16,7 +16,7 @@ export class CardsController {
 
     @Patch(':id')
     @UseGuards(JwtAuthGuard)
-    async updateCardById(@Param('id', ParseIntPipe) id: number, updateCardDto: UpdateCardDto) {
+    async updateCardById(@Param('id', ParseIntPipe) id: number, @Body() updateCardDto: UpdateCardDto) {
         return this.cardsService.updateCardById(id, updateCardDto)
     }
     

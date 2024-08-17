@@ -16,7 +16,7 @@ export class CommentsController {
 
     @Patch(':id')
     @UseGuards(JwtAuthGuard)
-    async updateComment(@Param('id', ParseIntPipe) id: number, updateCommentDto: UpdateCommentDto) {
+    async updateComment(@Param('id', ParseIntPipe) id: number, @Body() updateCommentDto: UpdateCommentDto) {
         return this.commentsService.updateCommentById(id, updateCommentDto)
     }
     
