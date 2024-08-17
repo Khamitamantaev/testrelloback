@@ -5,15 +5,14 @@ import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { PrismaModule } from 'src/prisma/prisma.module';
-
-export const jwtSecret = 'secret';
+import { jwtConstants } from './constants';
 
 @Module({
   imports: [
     PrismaModule,
     PassportModule,
     JwtModule.register({
-      secret: jwtSecret,
+      secret: jwtConstants.secret,
       signOptions: { expiresIn: '5m' }, // e.g. 30s, 7d, 24h
     }),
   ],
