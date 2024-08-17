@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Req } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateColumnDto } from './dto/create-column.dto';
 import { UpdateColumnDto } from './dto/update-column.dto';
@@ -7,17 +7,14 @@ import { UpdateColumnDto } from './dto/update-column.dto';
 export class ColumnsService {
     constructor(private prisma: PrismaService) { }
 
-
     async createColumns(createDto: CreateColumnDto) {
         return this.prisma.column.create({ data: createDto })
     }
 
-    // Колонки конкретного юзера со всем картами и комментариями
     async findColumnById(id: number) {
         return this.prisma.column.findUnique({ where: { id }})
     }
 
-    // Колонки конкретного юзера со всем картами и комментариями
     async findUserColumnsDataById(userId: number) {
         return this.prisma.column.findMany({ where: { userId }, include: { cards: { include: { comments: true } } } })
     }

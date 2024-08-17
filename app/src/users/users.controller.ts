@@ -12,7 +12,6 @@ import {
   import { UsersService } from './users.service';
   import { CreateUserDto } from './dto/create-user.dto';
   import { UpdateUserDto } from './dto/update-user.dto';
-  import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
   import { ColumnsService } from 'src/columns/columns.service';
   
   @Controller('users')
@@ -28,19 +27,16 @@ import {
     }
   
     @Get()
-    // @UseGuards(JwtAuthGuard)
     async findAll() {
       return this.usersService.findAll();
     }
   
     @Get(':id')
-    // @UseGuards(JwtAuthGuard)
     async findOne(@Param('id', ParseIntPipe) id: number) {
       return this.usersService.findOne(id);
     }
 
     @Get('/all/:id')
-    // @UseGuards(JwtAuthGuard)
     async findOneWithData(@Param('id', ParseIntPipe) id: number) {
       return this.usersService.findOneWithData(id);
     }
@@ -52,7 +48,6 @@ import {
     }
   
     @Patch(':id')
-    // @UseGuards(JwtAuthGuard)
     async update(
       @Param('id', ParseIntPipe) id: number,
       @Body() updateUserDto: UpdateUserDto,
@@ -66,7 +61,6 @@ import {
     }
   
     @Delete(':id')
-    // @UseGuards(JwtAuthGuard)
     async remove(@Param('id', ParseIntPipe) id: number) {
       return await this.usersService.remove(id);
     }

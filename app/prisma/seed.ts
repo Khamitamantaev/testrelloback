@@ -11,27 +11,27 @@ async function main() {
   );
   // create user
   const user1 = await prisma.user.upsert({
-    where: { name: "Khamit", email: "test@gmail.com" },
+    where: { name: "Khamit1", email: "test1@gmail.com" },
     update: { },
     create: {
-      name: 'Khamit',
-      email: 'test@gmail.com',
+      name: 'Khamit1',
+      email: 'test1@gmail.com',
       columns: {
         create: {
-          title: "FirstColimn",
+          title: "FirstColimn1",
           cards: {
             create: {
-              title: "FirstCard",
+              title: "FirstCard1",
               comments: {
                 create: [
                   {
-                    text: "Привет! Хороший FirstCard Комментарии1!"
+                    text: "Привет! Хороший FirstCard1 Комментарии1!"
                   },
                   {
-                    text: "Привет! Хороший FirstCard Комментарии2!"
+                    text: "Привет! Хороший FirstCard1 Комментарии2!"
                   },
                   {
-                    text: "Привет! Хороший FirstCard Комментарии3!"
+                    text: "Привет! Хороший FirstCard1 Комментарии3!"
                   }
                 ]
               }
