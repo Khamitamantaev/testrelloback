@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, U
 import { ColumnsService } from './columns.service';
 import { CreateColumnDto } from './dto/create-column.dto';
 import { UpdateColumnDto } from './dto/update-column.dto';
-import { AuthGuard } from 'src/auth/auth-guard';
+import { AuthGuard } from 'src/auth/guards/auth-guard';
 
 @Controller('columns')
 export class ColumnsController {

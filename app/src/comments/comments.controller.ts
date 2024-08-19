@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGua
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-import { AuthGuard } from 'src/auth/auth-guard';
+import { AuthGuard } from 'src/auth/guards/auth-guard';
 
 @Controller('comments')
 export class CommentsController {
