@@ -20,8 +20,8 @@ model Column {
   title     String   @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(6)
   userId    Int
-  cards     Card[]
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cards Card[]
 }
 
 model Card {

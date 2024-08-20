@@ -9,16 +9,50 @@ async function main() {
     "password",
     10,
   );
+
   // create user
-  const user1 = await prisma.user.upsert({
-    where: { name: "Khamit1", email: "test1@gmail.com" },
-    update: { },
+  await prisma.user.upsert({
+    where: { name: "Khamit", email: "test@gmail.com" },
+    update: {},
+    create: {
+      name: 'Khamit',
+      email: 'test@gmail.com',
+      columns: {
+        create: {
+          title: "FirstColumn",
+          cards: {
+            create: {
+              title: "FirstCard",
+              comments: {
+                create: [
+                  {
+                    text: "Привет! Хороший FirstCard Комментарии1!"
+                  },
+                  {
+                    text: "Привет! Хороший FirstCard Комментарии2!"
+                  },
+                  {
+                    text: "Привет! Хороший FirstCard Комментарии3!"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      password: hashedPassword
+    },
+  });
+
+  await prisma.user.upsert({
+    where: { name: "Khamit2", email: "test1@gmail.com" },
+    update: {},
     create: {
       name: 'Khamit1',
       email: 'test1@gmail.com',
       columns: {
         create: {
-          title: "FirstColimn1",
+          title: "FirstColumn1",
           cards: {
             create: {
               title: "FirstCard1",
@@ -42,8 +76,6 @@ async function main() {
       password: hashedPassword
     },
   });
-
-  console.log({ user1 });
 }
 
 main()

@@ -7,7 +7,7 @@ import { UpdateColumnDto } from './dto/update-column.dto';
 export class ColumnsService {
     constructor(private prisma: PrismaService) { }
 
-    async createColumns(createDto: CreateColumnDto) {
+    async createColumn(createDto: CreateColumnDto) {
         return this.prisma.column.create({ data: createDto })
     }
 
@@ -15,7 +15,7 @@ export class ColumnsService {
         return this.prisma.column.findUnique({ where: { id }})
     }
 
-    async findUserColumnsDataById(userId: number) {
+    async findUserAllDataById(userId: number) {
         return this.prisma.column.findMany({ where: { userId }, include: { cards: { include: { comments: true } } } })
     }
 
