@@ -1,41 +1,49 @@
-import { HttpException, HttpStatus, Injectable, Req } from '@nestjs/common';
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable, Req } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateColumnDto } from './dto/create-column.dto';
 import { UpdateColumnDto } from './dto/update-column.dto';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class ColumnsService {
-    constructor(private prisma: PrismaService) { }
+    constructor(
+        private prisma: PrismaService,
+        private userService: UsersService
+    ) { }
 
     async createColumn(createDto: CreateColumnDto) {
         return this.prisma.column.create({ data: createDto })
     }
 
     async findColumnById(id: number) {
-        return this.prisma.column.findUnique({ where: { id }})
+        const findColumn = await this.prisma.column.findUnique({ where: { id }})
+        if(!findColumn) throw new HttpException("Колонка с таким Id не найдена для обновления", HttpStatus.NOT_FOUND)
+        else return findColumn
     }
 
-    async findUserAllDataById(userId: number) {
-        return this.prisma.column.findMany({ where: { userId }, include: { cards: { include: { comments: true } } } })
-    }
+    // async findUserColumnsAllDataById(userId: number) {
+    //     return this.prisma.column.findMany({ where: { userId }, include: { cards: { include: { comments: true } } } })
+    // }
 
-    // Колонки юзера без карточек
     async findUserColumnsById(userId: number) {
-        return this.prisma.column.findMany({ where: { userId }})
+        const findUser = await this.userService.findOne(userId)
+        if (findUser) return this.prisma.column.findMany({ where: { userId } })
     }
 
-    // Обновление колонки по Id
-    async updateColumnById(columnId: number, columnUpdateDto: UpdateColumnDto ) {
-        return this.prisma.column.update({ where: { id: columnId}, data: columnUpdateDto})
+    async updateColumnById(columnId: number, columnUpdateDto: UpdateColumnDto) {
+        const findColumn = await this.prisma.column.findUnique({ where: { id: columnId}})
+        if(!findColumn) throw new HttpException("Колонка с таким Id не найдена для обновления", HttpStatus.NOT_FOUND)
+        return this.prisma.column.update({ where: { id: columnId }, data: columnUpdateDto })
     }
-    
-    // Удаление по id
+
     async deleteColumnById(columnId: number) {
-        return this.prisma.column.delete({ where: { id: columnId }})
+        const findColumn = await this.prisma.column.findUnique({ where: { id: columnId}})
+        if(!findColumn) throw new HttpException("Колонка с таким Id не найдена", HttpStatus.NOT_FOUND)
+        else return this.prisma.column.delete({ where: { id: columnId } })
     }
 
-    // Удаление по userId всех его колонок
     async deleteColumnByUserId(userId: number) {
-        return this.prisma.column.deleteMany({ where: { userId }})
+        const findUser = await this.userService.findOne(userId)
+        if (findUser) return this.prisma.column.deleteMany({ where: { userId } })
     }
 }

@@ -8,6 +8,7 @@ async function bootstrap() {
     .setTitle('RESTful API')
     .setDescription('C авторизацией для trello')
     .setVersion('1.0')
+    .addBearerAuth()
     .addTag('TRELLO')
     .build();
   const document = SwaggerModule.createDocument(app, config);

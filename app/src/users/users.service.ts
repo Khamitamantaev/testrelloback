@@ -55,11 +55,14 @@ export class UsersService {
   }
 
   async findOne(id: number) {
-    return this.prisma.user.findUnique({ where: { id }, select: { id: true, email: true, name: true, password: false } });
+    const findUser = await this.prisma.user.findUnique({ where: { id }})
+    if(!findUser) throw new HttpException("Юзер с таким Id не найден", HttpStatus.NOT_FOUND)
+    else return this.prisma.user.findUnique({ where: { id }, select: { id: true, email: true, name: true, password: false } });
   }
 
-  // Получаем пользователя со всеми данным  
   async findOneWithData(id: number) {
+    const findUser = await this.prisma.user.findUnique({ where: { id }})
+    if(!findUser) throw new HttpException("Юзер с таким Id не найден", HttpStatus.NOT_FOUND)
     return this.prisma.user.findFirst({ where: { id }, include: { columns: { include: { cards: { include: { comments: true } } } } } });
   }
 
