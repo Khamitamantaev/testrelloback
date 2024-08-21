@@ -4,6 +4,7 @@ import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { UserCardGuard } from 'src/auth/guards/user-card-guard';
+import { FindOneParams } from './dto/find-one.params';
 
 @Controller('cards')
 export class CardsController {
@@ -19,8 +20,8 @@ export class CardsController {
     @Patch(':id')
     @UsePipes(new ValidationPipe())
     @UseGuards(AuthGuard, UserCardGuard)
-    async updateCardById(@Param('id', ParseIntPipe) id: number, @Body() updateCardDto: UpdateCardDto) {
-        return this.cardsService.updateCardById(id, updateCardDto)
+    async updateCardById(@Param() params: FindOneParams, @Body() updateCardDto: UpdateCardDto) {
+        return this.cardsService.updateCardById(params.id, updateCardDto)
     }
     
     @Get(':id')
