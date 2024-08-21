@@ -23,7 +23,7 @@ export class UserCardGuard implements CanActivate {
     
     if (!request.params.id) {
       if (request.method === "POST") {
-        const column = await this.columnService.findColumnById(request.body.columnId)
+        const column = await this.columnService.findColumnById(parseInt(request.body.columnId))
         const userc = await this.userService.findOne(column.userId)
         if (user.userId !== userc.id) {
           throw new HttpException("dont worry, you cant do this", HttpStatus.FORBIDDEN)

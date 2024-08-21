@@ -8,8 +8,4 @@ export class UpdateCommentDto {
     @MaxLength(100)
     @ApiProperty()
     text: string
-
-    @IsInt()
-    @ApiProperty()
-    cardId: number
 }

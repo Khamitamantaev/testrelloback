@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -13,11 +13,9 @@ export class CommentsService {
     }
 
     async findCommentById(id: number) {
-        return this.prisma.comment.findUnique({ where: { id }})
-    }
-
-    async findCardCommentsDataById(cardId: number) {
-        return this.prisma.comment.findMany({ where: { cardId } })
+        const comment = await this.prisma.comment.findUnique({ where: { id }})
+        if(!comment) throw new HttpException("Комментарий с таким id не найден", HttpStatus.NOT_FOUND)
+        else return comment
     }
 
     async updateCommentById(commentId: number, commentUpdateDto: UpdateCommentDto ) {

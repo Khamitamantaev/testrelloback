@@ -12,18 +12,19 @@ export class ColumnsService {
     ) { }
 
     async createColumn(createDto: CreateColumnDto) {
-        return this.prisma.column.create({ data: createDto })
+        if (!isNaN(createDto.userId)) {
+            return this.prisma.column.create({ data: createDto })
+        } else throw new HttpException("Пожалуйста введите корректный userId", HttpStatus.NOT_FOUND)
     }
 
     async findColumnById(id: number) {
-        const findColumn = await this.prisma.column.findUnique({ where: { id }})
-        if(!findColumn) throw new HttpException("Колонка с таким Id не найдена", HttpStatus.NOT_FOUND)
-        else return findColumn
+        if (!isNaN(id)) {
+            const findColumn = await this.prisma.column.findUnique({ where: { id }})
+            if(!findColumn) throw new HttpException("Колонка с таким Id не найдена", HttpStatus.NOT_FOUND)
+            else return findColumn
+        }  else throw new HttpException("Пожалуйста введите корректный id колонки", HttpStatus.NOT_FOUND)
+        
     }
-
-    // async findUserColumnsAllDataById(userId: number) {
-    //     return this.prisma.column.findMany({ where: { userId }, include: { cards: { include: { comments: true } } } })
-    // }
 
     async findUserColumnsById(userId: number) {
         const findUser = await this.userService.findOne(userId)
