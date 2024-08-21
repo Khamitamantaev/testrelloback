@@ -34,8 +34,4 @@ export class CardsService {
     async deleteCardById(cardId: number) {
         return this.prisma.card.delete({ where: { id: cardId } })
     }
-
-    async deleteColumnCardsById(columnId: number) {
-        return this.prisma.card.deleteMany({ where: { columnId } })
-    }
 }
