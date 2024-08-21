@@ -61,7 +61,7 @@ export class ColumnsController {
 
     @ApiOperation({
         summary: 'Delete columns',
-        description: 'Удаление всех колонок пользователя',
+        description: 'Удаление всех колонок пользователя по userId',
     })
     @Delete('/:id/columns')
     @UseGuards(AuthGuard)
