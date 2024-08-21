@@ -23,7 +23,6 @@ export class ColumnsService {
             if(!findColumn) throw new HttpException("Колонка с таким Id не найдена", HttpStatus.NOT_FOUND)
             else return findColumn
         }  else throw new HttpException("Пожалуйста введите корректный id колонки", HttpStatus.NOT_FOUND)
-        
     }
 
     async findUserColumnsById(userId: number) {

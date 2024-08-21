@@ -2,10 +2,11 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
+import { ColumnsService } from 'src/columns/columns.service';
 
 @Injectable()
 export class CardsService {
-    constructor(private prisma: PrismaService) { }
+    constructor(private prisma: PrismaService, private columnService: ColumnsService) { }
 
 
     async createCard(createDto: CreateCardDto) {
@@ -24,7 +25,10 @@ export class CardsService {
     }
 
     async updateCardById(cardId: number, cardUpdateDto: UpdateCardDto) {
-        return this.prisma.card.update({ where: { id: cardId }, data: cardUpdateDto })
+        if (!isNaN(cardUpdateDto.columnId)) {
+            const findColumn = await this.columnService.findColumnById(cardUpdateDto.columnId)
+            if (findColumn) return this.prisma.card.update({ where: { id: cardId }, data: cardUpdateDto })
+        } else throw new HttpException("Пожалуйста введите корректный id колонки для перемещения", HttpStatus.NOT_FOUND)
     }
 
     async deleteCardById(cardId: number) {

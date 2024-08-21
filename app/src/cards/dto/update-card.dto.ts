@@ -1,4 +1,4 @@
-import { IsString, MinLength, MaxLength } from 'class-validator';
+import { IsString, MinLength, MaxLength, IsInt } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateCardDto {
@@ -8,4 +8,8 @@ export class UpdateCardDto {
     @MaxLength(20)
     @ApiProperty()
     title: string
+
+    @IsInt()
+    @ApiProperty()
+    columnId: number
 }
