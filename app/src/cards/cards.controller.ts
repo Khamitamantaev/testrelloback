@@ -3,13 +3,14 @@ import { AuthGuard } from 'src/auth/guards/auth-guard';
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
+import { UserCardGuard } from 'src/auth/guards/user-card-guard';
 
 @Controller('cards')
 export class CardsController {
     constructor(private cardsService: CardsService) {}
 
     @Post()
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard, UserCardGuard)
     async createCard(@Body() createCardDto: CreateCardDto) {
         return this.cardsService.createCard(createCardDto)
     }
@@ -21,7 +22,7 @@ export class CardsController {
     }
     
     @Get(':id')
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard, UserCardGuard)
     async findCardById(@Param('id', ParseIntPipe) id: number) {
         return this.cardsService.findCardById(id)
     }

@@ -28,11 +28,37 @@ export class UsersService {
     return this.prisma.user.findMany();
   }
 
-  async findOne(id: number) {
-    return this.prisma.user.findUnique({ where: { id }, select: { email: true, name: true, password: false } });
+  async findUserByCardId(id: number) {
+    return this.prisma.user.findFirst({
+      include: {
+        columns: {
+          include: {
+            cards: {
+              where: { id }
+            }
+          }
+        },
+      },
+    })
   }
 
-  // Получаем пользователя со всеми данными
+  async findUserByColumnUserId(id: number) {
+    return this.prisma.user.findFirst({
+      include: {
+        columns: {
+          where: {
+            id
+          }
+        },
+      },
+    })
+  }
+
+  async findOne(id: number) {
+    return this.prisma.user.findUnique({ where: { id }, select: { id: true, email: true, name: true, password: false } });
+  }
+
+  // Получаем пользователя со всеми данным  
   async findOneWithData(id: number) {
     return this.prisma.user.findFirst({ where: { id }, include: { columns: { include: { cards: { include: { comments: true } } } } } });
   }
