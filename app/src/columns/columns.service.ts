@@ -17,7 +17,7 @@ export class ColumnsService {
 
     async findColumnById(id: number) {
         const findColumn = await this.prisma.column.findUnique({ where: { id }})
-        if(!findColumn) throw new HttpException("Колонка с таким Id не найдена для обновления", HttpStatus.NOT_FOUND)
+        if(!findColumn) throw new HttpException("Колонка с таким Id не найдена", HttpStatus.NOT_FOUND)
         else return findColumn
     }
 

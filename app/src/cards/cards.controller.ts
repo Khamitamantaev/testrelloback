@@ -4,7 +4,6 @@ import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { UserCardGuard } from 'src/auth/guards/user-card-guard';
-import { FindOneParams } from './dto/find-one.params';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { CardEntity } from './entities/card-entity';
 
@@ -16,6 +15,7 @@ export class CardsController {
     @Post()
     @UsePipes(new ValidationPipe())
     @UseGuards(AuthGuard, UserCardGuard)
+    @ApiBearerAuth()
     @ApiCreatedResponse({ type: CardEntity })
     async createCard(@Body() createCardDto: CreateCardDto) {
         return this.cardsService.createCard(createCardDto)
@@ -25,8 +25,8 @@ export class CardsController {
     @UsePipes(new ValidationPipe())
     @UseGuards(AuthGuard, UserCardGuard)
     @ApiBearerAuth()
-    async updateCardById(@Param() params: FindOneParams, @Body() updateCardDto: UpdateCardDto) {
-        return this.cardsService.updateCardById(params.id, updateCardDto)
+    async updateCardById(@Param('id', ParseIntPipe) id: number, @Body() updateCardDto: UpdateCardDto) {
+        return this.cardsService.updateCardById(id, updateCardDto)
     }
     
     @Get(':id')

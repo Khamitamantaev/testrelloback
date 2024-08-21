@@ -15,6 +15,7 @@ export class CommentsController {
     @Post()
     @UsePipes(new ValidationPipe())
     @UseGuards(AuthGuard, UserCommentGuard)
+    @ApiBearerAuth()
     @ApiCreatedResponse({ type: CommentEntity })
     async createComment(@Body() createCommentDto: CreateCommentDto) {
         return this.commentsService.createComment(createCommentDto)
