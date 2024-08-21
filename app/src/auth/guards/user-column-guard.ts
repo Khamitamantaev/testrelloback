@@ -17,7 +17,7 @@ export class UserColumnGuard implements CanActivate {
     if (!request.params.id) {
       if (request.method === "POST") {
         if (user.userId !== request.body.userId) {
-          throw new HttpException("dont worry, tou cant do this", HttpStatus.FORBIDDEN)
+          throw new HttpException("dont worry, you cant do this", HttpStatus.FORBIDDEN)
         } else return true
       }
     }
@@ -26,17 +26,17 @@ export class UserColumnGuard implements CanActivate {
     switch (request.method) {
       case "DELETE":
         if (user.userId !== column.userId) {
-          throw new HttpException("dont worry, tou cant do this", HttpStatus.FORBIDDEN)
+          throw new HttpException("dont worry, you cant do this", HttpStatus.FORBIDDEN)
         } else return true
       case "GET":
         if (!column) throw new HttpException("Not Found", HttpStatus.NOT_FOUND)
         if (user.userId !== column.userId) {
-          throw new HttpException("dont worry, tou cant do this", HttpStatus.FORBIDDEN)
+          throw new HttpException("dont worry, you cant do this", HttpStatus.FORBIDDEN)
         } else return true
       case "PATCH":
         if (!column) throw new HttpException("Not Found", HttpStatus.NOT_FOUND)
         if (user.userId !== column.userId) {
-          throw new HttpException("dont worry, tou cant do this", HttpStatus.FORBIDDEN)
+          throw new HttpException("dont worry, you cant do this", HttpStatus.FORBIDDEN)
         } else return true
     }
   }

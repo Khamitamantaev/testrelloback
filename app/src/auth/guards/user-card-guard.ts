@@ -26,7 +26,7 @@ export class UserCardGuard implements CanActivate {
         const column = await this.columnService.findColumnById(request.body.columnId)
         const userc = await this.userService.findOne(column.userId)
         if (user.userId !== userc.id) {
-          throw new HttpException("dont worry, tou cant do this", HttpStatus.FORBIDDEN)
+          throw new HttpException("dont worry, you cant do this", HttpStatus.FORBIDDEN)
         } else return true
       }
     }
@@ -38,17 +38,17 @@ export class UserCardGuard implements CanActivate {
     switch (request.method) {
       case "DELETE":
         if (user.userId !== checkUser.id) {
-          throw new HttpException("dont worry, tou cant do this", HttpStatus.FORBIDDEN)
+          throw new HttpException("dont worry, you cant do this", HttpStatus.FORBIDDEN)
         } else return true
       case "GET":
         if (!checkUser) throw new HttpException("Not Found", HttpStatus.NOT_FOUND)
         if (user.userId !== checkUser.id) {
-          throw new HttpException("dont worry, tou cant do this", HttpStatus.FORBIDDEN)
+          throw new HttpException("dont worry, you cant do this", HttpStatus.FORBIDDEN)
         } else return true
       case "PATCH":
         if (!checkUser) throw new HttpException("Not Found", HttpStatus.NOT_FOUND)
         if (user.userId !== checkUser.id) {
-          throw new HttpException("dont worry, tou cant do this", HttpStatus.FORBIDDEN)
+          throw new HttpException("dont worry, you cant do this", HttpStatus.FORBIDDEN)
         } else return true
     }
   }
