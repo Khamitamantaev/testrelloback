@@ -31,6 +31,11 @@ npm run start:dev
 npm run studio
 ```
 
+* Очистка базы
+```
+npm run reset
+```
+
 * Run prod
 ```
 npm run build

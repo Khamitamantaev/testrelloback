@@ -1,5 +1,5 @@
 // src/users/users.service.ts
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -78,6 +78,8 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    return this.prisma.user.delete({ where: { id } });
+    const user = await this.prisma.user.findUnique({ where: { id }})
+    if(!user) throw new HttpException('Пользователя с таким Id не существует для удаления', HttpStatus.NOT_FOUND);
+    else return this.prisma.user.delete({ where: { id } });
   }
 }
