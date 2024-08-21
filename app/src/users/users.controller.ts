@@ -8,6 +8,8 @@ import {
     Delete,
     ParseIntPipe,
     UseGuards,
+    UsePipes,
+    ValidationPipe,
   } from '@nestjs/common';
   import { UsersService } from './users.service';
   import { CreateUserDto } from './dto/create-user.dto';
@@ -22,6 +24,7 @@ import {
     ) {}
   
     @Post()
+    @UsePipes(new ValidationPipe())
     async create(@Body() createUserDto: CreateUserDto) {
       return await this.usersService.create(createUserDto);
     }
@@ -41,13 +44,13 @@ import {
       return this.usersService.findOneWithData(id);
     }
 
-    // Найти все колонки юзера по userId
     @Get('/:id/columns')
     async findAllUserColumnsById(@Param('id', ParseIntPipe) id: number) {
       return this.columnService.findUserColumnsById(id)
     }
   
     @Patch(':id')
+    @UsePipes(new ValidationPipe())
     async update(
       @Param('id', ParseIntPipe) id: number,
       @Body() updateUserDto: UpdateUserDto,
