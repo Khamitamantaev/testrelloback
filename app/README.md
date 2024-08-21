@@ -31,6 +31,21 @@ npm run start:dev
 npm run studio
 ```
 
+
+
+* Созданные seed пользователи для тестов
+```
+{
+  "email": "test@gmail.com",
+  "password": "password"
+}
+
+{
+  "email": "test1@gmail.com",
+  "password": "password"
+}
+```
+
 * Очистка базы
 ```
 npm run reset
