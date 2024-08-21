@@ -12,6 +12,10 @@ export class UsersService {
   constructor(private prisma: PrismaService) { }
 
   async create(createUserDto: CreateUserDto) {
+
+    const findUser = await this.prisma.user.findUnique({ where: { email: createUserDto.email }})
+    if(findUser) throw new HttpException("Юзер с таким email уже существует", HttpStatus.OK)
+
     const hashedPassword = await bcrypt.hash(
       createUserDto.password,
       roundsOfHashing,

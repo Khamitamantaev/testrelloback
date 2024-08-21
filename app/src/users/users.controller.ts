@@ -20,7 +20,7 @@ import { UserEntity } from './entities/user-entity';
 import { AuthGuard } from 'src/auth/guards/auth-guard';
 
 @Controller('users')
-@ApiTags('users')
+@ApiTags('Users')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
