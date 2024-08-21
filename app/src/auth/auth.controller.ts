@@ -13,7 +13,7 @@ export class AuthController {
 
   @ApiOperation({
     summary: 'Login User',
-    description: 'Login user with email and password',
+    description: 'Вход пользователя по email и паролю',
   })
   @Post('login')
   @ApiOkResponse({ type: AuthEntity })

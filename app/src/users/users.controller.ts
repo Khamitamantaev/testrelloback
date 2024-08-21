@@ -40,7 +40,7 @@ export class UsersController {
 
   @ApiOperation({
     summary: 'Get users',
-    description: 'Получение списка пользователей(array)',
+    description: 'Получение списка пользователей(массив)',
   })
   @Get()
   @UseGuards(AuthGuard)
