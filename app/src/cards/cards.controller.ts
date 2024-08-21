@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/guards/auth-guard';
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
@@ -10,12 +10,14 @@ export class CardsController {
     constructor(private cardsService: CardsService) {}
 
     @Post()
+    @UsePipes(new ValidationPipe())
     @UseGuards(AuthGuard, UserCardGuard)
     async createCard(@Body() createCardDto: CreateCardDto) {
         return this.cardsService.createCard(createCardDto)
     }
 
     @Patch(':id')
+    @UsePipes(new ValidationPipe())
     @UseGuards(AuthGuard, UserCardGuard)
     async updateCardById(@Param('id', ParseIntPipe) id: number, @Body() updateCardDto: UpdateCardDto) {
         return this.cardsService.updateCardById(id, updateCardDto)

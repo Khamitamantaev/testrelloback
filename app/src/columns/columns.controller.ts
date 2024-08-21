@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ColumnsService } from './columns.service';
 import { CreateColumnDto } from './dto/create-column.dto';
 import { UpdateColumnDto } from './dto/update-column.dto';
@@ -10,12 +10,14 @@ export class ColumnsController {
     constructor(private columnService: ColumnsService) {}
 
     @Post()
+    @UsePipes(new ValidationPipe())
     @UseGuards(AuthGuard, UserColumnGuard)
     async createColumn(@Body() createColumnDto: CreateColumnDto) {
         return this.columnService.createColumn(createColumnDto)
     }
 
     @Patch(':id')
+    @UsePipes(new ValidationPipe())
     @UseGuards(AuthGuard, UserColumnGuard)
     async updateColumn(@Param('id', ParseIntPipe) id: number, @Body() updateColumnDto: UpdateColumnDto) {
         return this.columnService.updateColumnById(id, updateColumnDto)

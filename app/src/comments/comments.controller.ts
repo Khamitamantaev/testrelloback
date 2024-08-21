@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -10,12 +10,14 @@ export class CommentsController {
     constructor(private commentsService: CommentsService) {}
 
     @Post()
+    @UsePipes(new ValidationPipe())
     @UseGuards(AuthGuard, UserCommentGuard)
     async createComment(@Body() createCommentDto: CreateCommentDto) {
         return this.commentsService.createComment(createCommentDto)
     }
 
     @Patch(':id')
+    @UsePipes(new ValidationPipe())
     @UseGuards(AuthGuard, UserCommentGuard)
     async updateComment(@Param('id', ParseIntPipe) id: number, @Body() updateCommentDto: UpdateCommentDto) {
         return this.commentsService.updateCommentById(id, updateCommentDto)
