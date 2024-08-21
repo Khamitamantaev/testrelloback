@@ -16,7 +16,7 @@ export class CardsController {
     }
 
     @Patch(':id')
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard, UserCardGuard)
     async updateCardById(@Param('id', ParseIntPipe) id: number, @Body() updateCardDto: UpdateCardDto) {
         return this.cardsService.updateCardById(id, updateCardDto)
     }
@@ -28,13 +28,13 @@ export class CardsController {
     }
 
     @Delete(':id')
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard, UserCardGuard)
     async deleteCardById(@Param('id', ParseIntPipe) id: number) {
         return this.cardsService.deleteCardById(id)
     }
 
     @Delete(':id')
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard, UserCardGuard)
     async deleteColumnCardsById(@Param('id', ParseIntPipe) id: number) {
         return this.cardsService.deleteColumnCardsById(id)
     }
