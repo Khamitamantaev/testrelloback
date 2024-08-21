@@ -15,6 +15,7 @@ export class ColumnsController {
     @Post()
     @UsePipes(new ValidationPipe())
     @UseGuards(AuthGuard, UserColumnGuard)
+    @ApiBearerAuth()
     @ApiCreatedResponse({ type: ColumnEntity })
     async createColumn(@Body() createColumnDto: CreateColumnDto) {
         return this.columnService.createColumn(createColumnDto)
