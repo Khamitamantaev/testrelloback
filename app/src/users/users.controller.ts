@@ -7,7 +7,6 @@ import {
     Param,
     Delete,
     ParseIntPipe,
-    UseGuards,
     UsePipes,
     ValidationPipe,
   } from '@nestjs/common';
