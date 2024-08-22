@@ -1,4 +1,4 @@
-import { forwardRef, HttpException, HttpStatus, Inject, Injectable, Req } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateColumnDto } from './dto/create-column.dto';
 import { UpdateColumnDto } from './dto/update-column.dto';
@@ -15,7 +15,6 @@ export class ColumnsService {
     async createColumn(createDto: CreateColumnDto, user: UserEntity) {
         const userId = user['userId']
         return this.prisma.column.create({ data: { title: createDto.title, userId } })
-
     }
 
     async findColumnById(id: number) {
