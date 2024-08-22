@@ -21,7 +21,7 @@ npm i
 * Скопировать и заполнить .env
 ```
 add .env
-copy .env.example to .env
+copy .example.env to .env
 ```
 
 * Запуск(development)
