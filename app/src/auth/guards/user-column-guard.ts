@@ -16,9 +16,7 @@ export class UserColumnGuard implements CanActivate {
     const user = request.user
     if (!request.params.id) {
       if (request.method === "POST") {
-        if (user.userId !== request.body.userId) {
-          throw new HttpException("dont worry, you cant do this", HttpStatus.FORBIDDEN)
-        } else return true
+        return true
       }
     }
     let column = await this.columnService.findColumnById(parseInt(request.params.id))

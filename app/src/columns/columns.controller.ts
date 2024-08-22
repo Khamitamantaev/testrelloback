@@ -6,6 +6,8 @@ import { AuthGuard } from 'src/auth/guards/auth-guard';
 import { UserColumnGuard } from 'src/auth/guards/user-column-guard';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ColumnEntity } from './entities/column-entity';
+import { User } from 'src/utils/decorators/user-decorator';
+import { UserEntity } from 'src/users/entities/user-entity';
 
 @Controller('columns')
 @ApiTags('Columns')
@@ -21,8 +23,8 @@ export class ColumnsController {
     @UseGuards(AuthGuard, UserColumnGuard)
     @ApiBearerAuth()
     @ApiCreatedResponse({ type: ColumnEntity })
-    async createColumn(@Body() createColumnDto: CreateColumnDto) {
-        return this.columnService.createColumn(createColumnDto)
+    async createColumn(@Body() createColumnDto: CreateColumnDto, @User() user: UserEntity) {
+        return this.columnService.createColumn(createColumnDto, user)
     }
 
     @ApiOperation({

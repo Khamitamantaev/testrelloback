@@ -7,8 +7,4 @@ export class CreateColumnDto {
     @MaxLength(20)
     @ApiProperty()
     title: string
-
-    @IsInt()
-    @ApiProperty()
-    userId: number
 }
