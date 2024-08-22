@@ -72,10 +72,11 @@ export class UsersService {
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const findUser = await this.prisma.user.findUnique({ where: { id }})
-    const checkUserWithEmail = await this.prisma.user.findUnique({ where: { email: updateUserDto.email }})
+    if(updateUserDto.email) {
+      const checkUserWithEmail = await this.prisma.user.findUnique({ where: { email: updateUserDto.email }})
+      if(checkUserWithEmail) throw new HttpException("Юзер с таким email уже существует", HttpStatus.NOT_FOUND)
+    }
     if(!findUser ) throw new HttpException("Юзер с таким Id не найден для обновления", HttpStatus.NOT_FOUND)
-    if(checkUserWithEmail) throw new HttpException("Юзер с таким email уже существует", HttpStatus.NOT_FOUND)
-    
     if (updateUserDto.password) {
       updateUserDto.password = await bcrypt.hash(
         updateUserDto.password,
