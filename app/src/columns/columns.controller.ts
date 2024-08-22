@@ -16,7 +16,7 @@ export class ColumnsController {
 
     @ApiOperation({
         summary: 'Create Сolumn',
-        description: 'Создание колонки(title: Название, userId: user, к которой прикрепляется колонка)',
+        description: 'Создание колонки({ title: Название })',
     })
     @Post()
     @UsePipes(new ValidationPipe())
