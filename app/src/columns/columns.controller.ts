@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ColumnsService } from './columns.service';
 import { CreateColumnDto } from './dto/create-column.dto';
 import { UpdateColumnDto } from './dto/update-column.dto';
@@ -8,8 +8,7 @@ import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestj
 import { ColumnEntity } from './entities/column-entity';
 import { User } from 'src/utils/decorators/user-decorator';
 import { UserEntity } from 'src/users/entities/user-entity';
-import { ConfigService } from '@nestjs/config';
-import { CONSTANTS } from 'src/utils/constants/constants';
+import { ParseIntPipe } from 'src/utils/pipes/parse-int.pipe';
 
 @Controller('columns')
 @ApiTags('Columns')

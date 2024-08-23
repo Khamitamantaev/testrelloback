@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -6,6 +6,7 @@ import { AuthGuard } from 'src/auth/guards/auth-guard';
 import { UserCommentGuard } from 'src/auth/guards/user-comment-guard';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CommentEntity } from './entities/comment-entity';
+import { ParseIntPipe } from 'src/utils/pipes/parse-int.pipe';
 
 @Controller('comments')
 @ApiTags("Comments")

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/guards/auth-guard';
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
@@ -6,6 +6,7 @@ import { UpdateCardDto } from './dto/update-card.dto';
 import { UserCardGuard } from 'src/auth/guards/user-card-guard';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CardEntity } from './entities/card-entity';
+import { ParseIntPipe } from 'src/utils/pipes/parse-int.pipe';
 
 @Controller('cards')
 @ApiTags('Cards')

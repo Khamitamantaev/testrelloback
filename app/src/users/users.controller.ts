@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
   UsePipes,
   ValidationPipe,
   UseGuards,
@@ -18,6 +17,7 @@ import { ColumnsService } from 'src/columns/columns.service';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserEntity } from './entities/user-entity';
 import { AuthGuard } from 'src/auth/guards/auth-guard';
+import { ParseIntPipe } from 'src/utils/pipes/parse-int.pipe';
 
 @Controller('users')
 @ApiTags('Users')

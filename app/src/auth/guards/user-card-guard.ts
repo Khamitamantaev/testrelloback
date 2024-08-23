@@ -46,8 +46,9 @@ export class UserCardGuard implements CanActivate {
           throw new HttpException("dont worry, you cant do this", HttpStatus.FORBIDDEN)
         } else return true
       case "PATCH":
+        const newCardColumn = await this.columnService.findColumnById(parseInt(request.body.columnId))
         if (!checkUser) throw new HttpException("Not Found", HttpStatus.NOT_FOUND)
-        if (user.userId !== checkUser.id) {
+        if (user.userId !== checkUser.id || column.userId !== newCardColumn.userId) {
           throw new HttpException("dont worry, you cant do this", HttpStatus.FORBIDDEN)
         } else return true
     }
